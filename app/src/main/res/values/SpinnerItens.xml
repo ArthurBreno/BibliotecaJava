@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Items">
+    <item name="L1" type="string">"Book"</item>
+    <item name="L2" type="string">"Magazine"</item>
+    <item name="L3" type="string">"Cd"</item>
+    <item name="L4" type="string">"Pokemon"</item>
+    </string-array>
+</resources>
