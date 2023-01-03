@@ -3,14 +3,36 @@ package com.example.bibliotecajava;
 public class Item {
     private long id;
     private String nome;
-    private String origem;
+    private String origen;
     private String data;
+    private final String[] itemList = {"Book", "Magazine", "Cd","Pokemon"};
+    private final String[] bookList = {"Author", "Number of Pages", "category", "type"};
+    private final String[] magazineList = {"Publisher", "Number of Pages", "category", "type"};
+    private final String[] cdList = {"Publisher/Singer", "Number of Records", "category", "Quality"};
+    private final String[] pokeList = {"Name", "Combat Power", "Primary Type", "Catch City"};
 
-    public void setItemValues(long id, String nome, String origem, String data){
+
+    public void setItemValues(long id, String nome, String origen, String data){
         this.id = id;
         this.nome = nome;
         this.data = data;
-        this.origem = origem;
+        this.origen = origen;
+    }
+
+    public String[] getItemList(){
+        return itemList;
+    }
+    public String[] getBookList(){
+        return bookList;
+    }
+    public String[] getMagazineList(){
+        return magazineList;
+    }
+    public String[] getCdList(){
+        return cdList;
+    }
+    public String[] getPokeList(){
+        return pokeList;
     }
 
     public void setId(long id) {
@@ -26,7 +48,7 @@ public class Item {
     }
 
     public void setOrigem(String origem) {
-        this.origem = origem;
+        this.origen = origem;
     }
 
     public long getId() {
@@ -42,6 +64,6 @@ public class Item {
     }
 
     public String getOrigem() {
-        return origem;
+        return origen;
     }
 }
