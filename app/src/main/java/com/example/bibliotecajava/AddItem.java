@@ -1,5 +1,9 @@
 package com.example.bibliotecajava;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,7 +63,14 @@ public class AddItem extends AppCompatActivity {
 
             }
         });
-
+        DataBase dataBase = new DataBase(getApplicationContext());
+        SQLiteDatabase db = dataBase.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("date", "dia de amanha");
+        long pqLongMds = db.insert("temp_name", null, values);
+        if(pqLongMds == -1) {
+            Toast.makeText(getApplicationContext(), "aaaaaaaaaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
