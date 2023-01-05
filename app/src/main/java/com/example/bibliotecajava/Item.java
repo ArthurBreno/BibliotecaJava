@@ -1,22 +1,35 @@
 package com.example.bibliotecajava;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.Date;
+
 public class Item {
+    private Context context;
     private long id;
-    private String nome;
-    private String origen;
-    private String data;
+    private String type;
+    private String parametro01;
+    private String parametro02;
+    private String parametro03;
+    private String parametro04;
     private final String[] itemList = {"Book", "Magazine", "Cd","Pokemon"};
     private final String[] bookList = {"Author", "Number of Pages", "category", "type"};
     private final String[] magazineList = {"Publisher", "Number of Pages", "category", "type"};
     private final String[] cdList = {"Publisher/Singer", "Number of Records", "category", "Quality"};
     private final String[] pokeList = {"Name", "Combat Power", "Primary Type", "Catch City"};
 
+    public void setItemValues(String parametro1, String parametro2, String parametro3, String parametro4){
+        this.parametro01 = parametro1;
+        this.parametro02 = parametro2;
+        this.parametro03 = parametro3;
+        this.parametro04 = parametro4;
 
-    public void setItemValues(long id, String nome, String origen, String data){
-        this.id = id;
-        this.nome = nome;
-        this.data = data;
-        this.origen = origen;
+    }
+
+    public void setContext(Context contexto){
+        this.context = contexto;
     }
 
     public String[] getItemList(){
@@ -39,31 +52,47 @@ public class Item {
         this.id = id;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setParametro01(String parametro01) {
+        this.parametro01 = parametro01;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setParametro02(String numero) {
+        this.parametro02 = numero;
     }
 
-    public void setOrigem(String origem) {
-        this.origen = origem;
+    public String getType() {
+        String temp = type;
+        return temp;
+
     }
 
-    public long getId() {
-        return id;
+    public String getParametro01() {
+        return parametro01;
+    }
+    public String getParametro02() {
+        return parametro02;
     }
 
-    public String getData() {
-        return data;
+    public String getParametro03() {
+        return parametro03;
     }
 
-    public String getNome() {
-        return nome;
+    public String getParametro04() {
+        return parametro04;
     }
 
-    public String getOrigem() {
-        return origen;
+    public void setParametro04(String parametro04) {
+        this.parametro04 = parametro04;
+    }
+
+
+    public void setParametro03(String parametro03) {
+        this.parametro03 = parametro03;
+    }
+
+
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

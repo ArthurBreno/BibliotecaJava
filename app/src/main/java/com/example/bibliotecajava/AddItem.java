@@ -3,26 +3,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-//--------
+import java.util.Date;
 
+//--------
 public class AddItem extends AppCompatActivity {
 
     TextView tv01, tv02, tv03, tv04, tvIdentifier;
     EditText ed01, ed02, ed03, ed04;
     Spinner spinner;
+    Button btn;
+    //--------------
     ArrayList<EditText> arrayListED = new ArrayList<>();
     ArrayList<TextView> arrayListTV = new ArrayList<>();
-
+    int selecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class AddItem extends AppCompatActivity {
         ed03 = findViewById(R.id.ed03);
         ed04 = findViewById(R.id.ed04);
         spinner = findViewById(R.id.spinnerRegisterItem);
+        btn = findViewById(R.id.btnAdicionarNaBiblioteca);
         //--------
         arrayListED.add(ed01);
         arrayListED.add(ed02);
@@ -53,9 +59,7 @@ public class AddItem extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(AddItem.this, "vc clicou no " + i + " item", Toast.LENGTH_SHORT).show();
                 defineTexts(i);
-
             }
 
             @Override
@@ -63,18 +67,31 @@ public class AddItem extends AppCompatActivity {
 
             }
         });
-        DataBase dataBase = new DataBase(getApplicationContext());
-        SQLiteDatabase db = dataBase.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("date", "dia de amanha");
-        long pqLongMds = db.insert("temp_name", null, values);
-        if(pqLongMds == -1) {
-            Toast.makeText(getApplicationContext(), "aaaaaaaaaaaaaaaaaaaaaa", Toast.LENGTH_SHORT).show();
-        }
-
-
+        //-------
+        btn.setOnClickListener(view ->{
+            if (verificarConteudio()){
+                DataBase dataBase = new DataBase(getApplicationContext());
+                Item item = new Item();
+                item.setContext(getApplicationContext());
+                item.setType(item.getItemList()[selecionado]);
+                item.setItemValues(ed01.getText().toString(),ed02.getText().toString(),ed03.getText().toString(),ed04.getText().toString());
+                //if (dataBase.updateDataBase() == -1){}
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                if (dataBase.updateDataBase(item) == -1){
+                    setResult(RESULT_CANCELED, intent);
+                }
+                else{
+                    setResult(RESULT_OK, intent);
+                }
+                onBackPressed();
+            }
+            else{
+                Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void defineTexts(int itemListSelected){
+        selecionado = itemListSelected;
         Item item = new Item();
         switch (itemListSelected) {
             case 0: //book
@@ -102,5 +119,16 @@ public class AddItem extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private boolean verificarConteudio(){
+        boolean verificar = true;
+        for (int i = 0; i < arrayListED.size(); i++) {
+            if (arrayListED.get(i).getText().toString().isEmpty()){
+                verificar = false;
+                break;
+            }
+        }
+        return verificar;
     }
 }
